@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useMemo, useRef, useState } from "react";
-import { ActionIcon, Badge, Card, Group, Table, Text, Tooltip, Box, Menu } from "@mantine/core";
-import { IconDetails, IconDots, IconMailPin, IconReceipt, IconSend2 } from "@tabler/icons-react";
+import { ActionIcon, Badge, Card, Group, Table, Text, Tooltip, Box, Menu, Alert } from "@mantine/core";
+import { IconAlertCircle, IconDetails, IconDots, IconMailPin, IconReceipt, IconSend2 } from "@tabler/icons-react";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../../../../../redux/store";
 import { setPagination } from "../../../../../../redux/slices/pagePaginationSlice";
@@ -110,6 +110,29 @@ export const FacilityClaimList = (props: { dataPass: any }) => {
     }
   }, [claimRows, dispatch]);
 
+  const handleStatusColor = (type: string) => {
+    switch (type) {
+      case "Pending":
+        return "yellow";
+      case "Under Review":
+        return "blue";
+      case "Processing":
+        return "cyan";
+      case "Approved":
+        return "green";
+      case "Rejected":
+        return "red";
+      case "Paid":
+        return "gray";
+      case "Returned":
+        return "pink";
+      case "Completed":
+        return "purple";
+      default:
+        return "gray";
+    }
+  };
+
   return (
     <Fragment>
       <PageModal
@@ -188,7 +211,24 @@ export const FacilityClaimList = (props: { dataPass: any }) => {
                         </Box>
                       </Card.Section>
 
-                      <Card.Section className="p-4 space-y-3">
+                      <Card.Section className="p-4 space-y-3 h-full">
+                        <div className="flex flex-row justify-center gap-2 pt-1">
+                          <Badge
+                            variant="light"
+                            radius="sm"
+                            color={row.emailSent === "Yes" ? "blue" : "gray"}
+                            leftSection={<IconMailPin size={14} />}
+                          >
+                            Email: {row.emailSent}
+                          </Badge>
+                          <Badge
+                            variant="light"
+                            radius="sm"
+                            color={handleStatusColor(row.status)}
+                          >
+                            {row.status}
+                          </Badge>
+                        </div>
                         <div className="flex items-center justify-between">
                           <Text size="sm" c="dimmed">
                             Claim date
@@ -205,23 +245,12 @@ export const FacilityClaimList = (props: { dataPass: any }) => {
                             {inr.format(row.totalFee)}
                           </Text>
                         </div>
-                        <div className="flex flex-row justify-center gap-2 pt-1">
-                          <Badge
-                            variant="light"
-                            radius="sm"
-                            color={row.emailSent === "Yes" ? "blue" : "gray"}
-                            leftSection={<IconMailPin size={14} />}
-                          >
-                            Email: {row.emailSent}
-                          </Badge>
-                          <Badge
-                            variant="light"
-                            radius="sm"
-                            color={row.status === "Accepted" ? "green" : "yellow"}
-                          >
-                            {row.status}
-                          </Badge>
-                        </div>
+                        {row.status == "Rejected" && (
+                          <Alert variant="light" color="cyan" title="Reason of rejected" icon={<IconAlertCircle size={16} />}>Document not match</Alert>
+                        )}
+                        {row.status == "Returned" && (
+                          <Alert variant="light" color="pink" title="Reason of returned" icon={<IconAlertCircle size={16} />}>Patient name is not match</Alert>
+                        )}
                       </Card.Section>
                       <Card.Section className="p-3 border-t rounded-b-xl bg-blue-100/40 dark:bg-gray-700/40">
                         <Group justify="center" gap="xs">
@@ -344,7 +373,7 @@ export const FacilityClaimList = (props: { dataPass: any }) => {
                             <Badge
                               variant="light"
                               radius="sm"
-                              color={row.status === "Accepted" ? "green" : "yellow"}
+                              color={handleStatusColor(row.status)}
                             >
                               {row.status}
                             </Badge>

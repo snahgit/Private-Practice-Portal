@@ -419,7 +419,7 @@ const App = () => {
               element: <FacilityClaim />,
               loader: () => {
                 return {
-                  type: 'claim',
+                  type: 'facilityClaim',
                 };
               },
             },
@@ -428,7 +428,7 @@ const App = () => {
               element: <FacilityClaimAddEditForm />,
               loader: () => {
                 return {
-                  type: 'claim',
+                  type: 'facilityClaim',
                 };
               },
             },
@@ -437,7 +437,7 @@ const App = () => {
               element: <FacilityClaimDetail />,
               loader: () => {
                 return {
-                  type: 'claim',
+                  type: 'facilityClaim',
                 };
               },
             },

@@ -128,7 +128,7 @@ const menuData: MenuItem[] = [
     ],
   },
   {
-    title: "Facility claim",
+    title: "Facility Claim",
     link: "/manage-claim/facility-claim",
     icon: <IconClover size={20} />,
     gradient: "from-cyan-500 to-blue-600",

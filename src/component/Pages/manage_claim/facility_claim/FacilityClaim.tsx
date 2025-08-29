@@ -6,19 +6,20 @@ import { PagePagination } from "../../../common/PagePagination";
 import type { RootState } from "../../../../redux/store";
 import { useSelector } from "react-redux";
 import { FacilityClaimList } from "./sections/list/FacilityClaimList";
+import { useLoaderData } from "react-router";
 
 export const FacilityClaim = () => {
-  // const loaderData = useLoaderData();
+  const loaderData = useLoaderData();
   const filterState = useSelector((state: RootState) => state.pageTopBarAndFilter);
   const claimRows = [
     { id: 1, billSnahId: "MFQBILL940914", patientName: "Rahul Biswas", snahId: "SNAHUS931921", totalFee: 10.0, claimDate: "2025-02-08", emailSent: "No", status: "Pending" },
-    { id: 2, billSnahId: "MFQBILL371817", patientName: "Rahul Biswas", snahId: "SNAHUS931921", totalFee: 67.0, claimDate: "2023-12-20", emailSent: "No", status: "Pending" },
-    { id: 3, billSnahId: "MFQBILL863153", patientName: "Rahul Biswas", snahId: "SNAHUS931921", totalFee: 300.0, claimDate: "2023-12-01", emailSent: "No", status: "Accepted" },
-    { id: 4, billSnahId: "MFQBILL554025", patientName: "Rahul Biswas", snahId: "SNAHUS931921", totalFee: 300.0, claimDate: "2023-12-01", emailSent: "No", status: "Accepted" },
-    { id: 5, billSnahId: "MFINV652518", patientName: "Rahul Biswas", snahId: "SNAHUS931921", totalFee: 57.50, claimDate: "2023-11-27", emailSent: "No", status: "Accepted" },
-    { id: 6, billSnahId: "MFINV823639", patientName: "Rahul Biswas", snahId: "SNAHUS931921", totalFee: 600.0, claimDate: "2023-12-01", emailSent: "No", status: "Accepted" },
-    { id: 7, billSnahId: "MFQBILL407584", patientName: "Rahul Biswas", snahId: "SNAHUS931921", totalFee: 99.0, claimDate: "2023-12-01", emailSent: "No", status: "Accepted" },
-    { id: 8, billSnahId: "MFQBILL177504", patientName: "Rahul Biswas", snahId: "SNAHUS931921", totalFee: 60.0, claimDate: "2023-12-01", emailSent: "No", status: "Pending" },
+    { id: 2, billSnahId: "MFQBILL371817", patientName: "Rahul Biswas", snahId: "SNAHUS931921", totalFee: 67.0, claimDate: "2023-12-20", emailSent: "No", status: "Under Review" },
+    { id: 3, billSnahId: "MFQBILL863153", patientName: "Rahul Biswas", snahId: "SNAHUS931921", totalFee: 300.0, claimDate: "2023-12-01", emailSent: "No", status: "Processing" },
+    { id: 4, billSnahId: "MFQBILL554025", patientName: "Rahul Biswas", snahId: "SNAHUS931921", totalFee: 300.0, claimDate: "2023-12-01", emailSent: "No", status: "Approved" },
+    { id: 5, billSnahId: "MFINV652518", patientName: "Rahul Biswas", snahId: "SNAHUS931921", totalFee: 57.50, claimDate: "2023-11-27", emailSent: "No", status: "Rejected" },
+    { id: 6, billSnahId: "MFINV823639", patientName: "Rahul Biswas", snahId: "SNAHUS931921", totalFee: 600.0, claimDate: "2023-12-01", emailSent: "No", status: "Paid" },
+    { id: 7, billSnahId: "MFQBILL407584", patientName: "Rahul Biswas", snahId: "SNAHUS931921", totalFee: 99.0, claimDate: "2023-12-01", emailSent: "No", status: "Returned" },
+    { id: 8, billSnahId: "MFQBILL177504", patientName: "Rahul Biswas", snahId: "SNAHUS931921", totalFee: 60.0, claimDate: "2023-12-01", emailSent: "No", status: "Completed" },
     { id: 9, billSnahId: "MFQBILL900101", patientName: "Anita Sharma", snahId: "SNAHUS123111", totalFee: 120.0, claimDate: "2024-01-15", emailSent: "Yes", status: "Accepted" },
     { id: 10, billSnahId: "MFQBILL900102", patientName: "Amit Kumar", snahId: "SNAHUS123112", totalFee: 45.0, claimDate: "2024-01-20", emailSent: "No", status: "Pending" },
     { id: 11, billSnahId: "MFQBILL900103", patientName: "Sneha Verma", snahId: "SNAHUS123113", totalFee: 250.0, claimDate: "2024-02-05", emailSent: "Yes", status: "Accepted" },
@@ -55,15 +56,15 @@ export const FacilityClaim = () => {
 
   const filteredRows = useMemo(() => {
     let rows = [...claimRows];
-    const role = (filterState.filter.statusFilter || "all").toLowerCase();
+    const role = (filterState.filter.claimFilter || "all").toLowerCase();
     if (role !== "all") rows = rows.filter(r => r.status.toLowerCase() === role);
     return rows;
-  }, [claimRows, filterState.filter.statusFilter]);
+  }, [claimRows, filterState.filter]);
 
   const topBarAndFilter = {
-    type: "claim",
-    title: "Claim",
-    heading: "List of all claims you can find below",
+    type: loaderData.type,
+    title: "Facility Claim",
+    heading: "List of all facility claims you can find below",
     viewMode: "grid",
     whatNeeded: {
       isViewModeNeeded: true,
