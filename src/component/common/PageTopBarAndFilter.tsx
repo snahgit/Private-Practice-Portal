@@ -419,6 +419,7 @@ export const PageTopBarAndFilter = (props: { dataPass: any }) => {
                       "patient",
                       "member",
                       "videoTutorial",
+                      "report",
                     ].includes(mergedTopBarAndFilter.type)
                   ) && (
                     <Grid.Col span={{ base: 12, lg: 3, sm: 12 }}>
