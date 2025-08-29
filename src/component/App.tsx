@@ -46,31 +46,16 @@ import { ManageReport } from "./Pages/manage_report/ManageReport";
 import { Report } from "./Pages/manage_report/report/Report";
 import { ReportAddEditForm } from "./Pages/manage_report/report/sections/form/ReportAddEditForm";
 import { Profile } from "./Pages/profile/Profile";
-import { SettledClaim } from "./Pages/manage_claim/settled_claim/SettledClaim";
-import { ManageMember } from "./Pages/manage_member/ManageMember";
-import { Member } from "./Pages/manage_member/member/Member";
-import { MemberDetail } from "./Pages/manage_member/member/sections/detail/MemberDetail";
 import { ReportDetail } from "./Pages/manage_report/report/sections/detail/ReportDetail";
 import { StaffMemberDetail } from "./Pages/manage_staff/staff_member/sections/detail/StaffMemberDetail";
 import { WalletTransaction } from "./Pages/transaction_history/wallet_transaction/WalletTransaction";
 import { PatientDetail } from "./Pages/manage_patient/patient/sections/detail/PatientDetail";
 import { PhysicianDetail } from "./Pages/medical_provider/physician/sections/detail/PhysicianDetail";
 import { ManagePatient } from "./Pages/manage_patient/ManagePatient";
-import { Pharmacist } from "./Pages/manage_staff/pharmacist/Pharmacist";
-import { PharmacistAddEditForm } from "./Pages/manage_staff/pharmacist/sections/form/PharmacistAddEditForm";
-import { PharmacistDetail } from "./Pages/manage_staff/pharmacist/sections/detail/PharmacistDetail";
-import { PharmacyClaim } from "./Pages/manage_claim/pharmacy_claim/PharmacyClaim";
 import { FacilityClaim } from "./Pages/manage_claim/facility_claim/FacilityClaim";
 import { FacilityClaimAddEditForm } from "./Pages/manage_claim/facility_claim/sections/form/FacilityClaimAddEditForm";
 import { FacilityClaimDetail } from "./Pages/manage_claim/facility_claim/sections/detail/FacilityClaimDetail";
-import { PharmacyClaimAddEditForm } from "./Pages/manage_claim/pharmacy_claim/sections/form/PharmacyClaimAddEditForm";
-import { PharmacyClaimDetail } from "./Pages/manage_claim/pharmacy_claim/sections/detail/PharmacyClaimDetail";
-import { SettledClaimDetail } from "./Pages/manage_claim/settled_claim/sections/detail/SettledClaimDetail";
-import { ClaimTransaction } from "./Pages/transaction_history/claim_transaction/ClaimTransaction";
-import { Prescription } from "./Pages/manage_prescription/prescription/Prescription";
-import { PrescriptIonInvoiceAddEditForm } from "./Pages/manage_prescription/prescription/sections/form/PrescriptIonInvoiceAddEditForm";
 import { PageAudioVideoCall } from "./common/PageAudioVideoCall";
-import { PrescriptionDetail } from "./Pages/manage_prescription/prescription/sections/detail/PrescriptionDetail";
 import { ViewAccessLog } from "./Pages/quick_assist/view_access_log/ViewAccessLog";
 import { Physician } from "./Pages/medical_provider/physician/Physician";
 
@@ -79,7 +64,7 @@ const App = () => {
   const token = useAppSelector((state) => {
     return state?.authentication?.data?.token;
   });
-  const colorScheme = useAppSelector((state) => state.theme.colorScheme);
+  const colorScheme = useAppSelector((state: any) => state.theme.colorScheme);
 
   const dispatch = useAppDispatch();
   const inactivityTimer = useRef<NodeJS.Timeout | null>(null);
@@ -372,15 +357,6 @@ const App = () => {
               },
             },
             {
-              path: "claim-transaction",
-              element: <ClaimTransaction />,
-              loader: () => {
-                return {
-                  type: 'claimTransaction',
-                };
-              },
-            },
-            {
               path: "wallet-transaction",
               element: <WalletTransaction />,
               loader: () => {
@@ -427,34 +403,6 @@ const App = () => {
                 };
               },
             },
-
-            {
-              path: "pharmacist",
-              element: <Pharmacist />,
-              loader: () => {
-                return {
-                  type: 'pharmacist',
-                };
-              },
-            },
-            {
-              path: "pharmacist/form",
-              element: <PharmacistAddEditForm />,
-              loader: () => {
-                return {
-                  type: 'pharmacist',
-                };
-              },
-            },
-            {
-              path: "pharmacist/detail",
-              element: <PharmacistDetail />,
-              loader: () => {
-                return {
-                  type: 'pharmacist',
-                };
-              },
-            },
           ],
         },
         {
@@ -487,51 +435,6 @@ const App = () => {
             {
               path: "facility-claim/detail",
               element: <FacilityClaimDetail />,
-              loader: () => {
-                return {
-                  type: 'claim',
-                };
-              },
-            },
-            {
-              path: "pharmacy-claim",
-              element: <PharmacyClaim />,
-              loader: () => {
-                return {
-                  type: 'claim',
-                };
-              },
-            },
-            {
-              path: "pharmacy-claim/form",
-              element: <PharmacyClaimAddEditForm />,
-              loader: () => {
-                return {
-                  type: 'claim',
-                };
-              },
-            },
-            {
-              path: "pharmacy-claim/detail",
-              element: <PharmacyClaimDetail />,
-              loader: () => {
-                return {
-                  type: 'claim',
-                };
-              },
-            },
-            {
-              path: "settled-claim",
-              element: <SettledClaim />,
-              loader: () => {
-                return {
-                  type: 'settledClaim',
-                };
-              },
-            },
-            {
-              path: "settled-claim/detail",
-              element: <SettledClaimDetail />,
               loader: () => {
                 return {
                   type: 'claim',
@@ -573,82 +476,6 @@ const App = () => {
               loader: () => {
                 return {
                   type: 'report',
-                };
-              },
-            },
-          ],
-        },
-        {
-          path: "manage-member",
-          element: <ManageMember />,
-          loader: () => {
-            return {
-              type: 'manageMember',
-            };
-          },
-          children: [
-            {
-              path: "member",
-              element: <Member />,
-              loader: () => {
-                return {
-                  type: 'member',
-                };
-              },
-            },
-            {
-              path: "member/form",
-              element: <ReportAddEditForm />,
-              loader: () => {
-                return {
-                  type: 'claim',
-                };
-              },
-            },
-            {
-              path: "member/detail",
-              element: <MemberDetail />,
-              loader: () => {
-                return {
-                  type: 'claim',
-                };
-              },
-            },
-          ],
-        },
-        {
-          path: "manage-prescription",
-          element: <ManageMember />,
-          loader: () => {
-            return {
-              type: 'managePrescription',
-            };
-          },
-          children: [
-            {
-              path: "prescription",
-              element: <Prescription />,
-              loader: () => {
-                return {
-                  type: 'prescription',
-                };
-              },
-            },
-            {
-              path: "prescription/create-invoice",
-              element: <PrescriptIonInvoiceAddEditForm />,
-              loader: () => {
-                return {
-                  type: 'prescription',
-                };
-              },
-            },
-            {
-              path: "prescription/detail",
-              element: <PrescriptionDetail />,
-              loader: () => {
-                return {
-                  type: 'prescription',
                 };
               },
             },

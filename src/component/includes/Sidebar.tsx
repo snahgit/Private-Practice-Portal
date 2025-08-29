@@ -84,11 +84,6 @@ const menuData: MenuItem[] = [
         link: "/transaction-history/payment-log",
         nestedMenu: [],
       },
-      // {
-      //   title: "Claim Transaction",
-      //   link: "/transaction-history/claim-transaction",
-      //   nestedMenu: [],
-      // },
       {
         title: "Wallet Transaction",
         link: "/transaction-history/wallet-transaction",
@@ -130,35 +125,14 @@ const menuData: MenuItem[] = [
         link: "/manage-staff/staff-member",
         nestedMenu: [],
       },
-      // {
-      //   title: "Pharmacist",
-      //   link: "/manage-staff/pharmacist",
-      //   nestedMenu: [],
-      // },
     ],
   },
   {
-    title: "Manage Claim",
-    link: "#",
+    title: "Facility claim",
+    link: "/manage-claim/facility-claim",
     icon: <IconClover size={20} />,
     gradient: "from-cyan-500 to-blue-600",
-    subMenu: [
-      {
-        title: "Facility claim",
-        link: "/manage-claim/facility-claim",
-        nestedMenu: [],
-      },
-      // {
-      //   title: "Pharmacy claim",
-      //   link: "/manage-claim/pharmacy-claim",
-      //   nestedMenu: [],
-      // },
-      // {
-      //   title: "Settled claim",
-      //   link: "/manage-claim/settled-claim",
-      //   nestedMenu: [],
-      // },
-    ],
+    subMenu: [],
   },
   {
     title: "Manage Report",
@@ -167,20 +141,6 @@ const menuData: MenuItem[] = [
     gradient: "from-cyan-500 to-blue-600",
     subMenu: [],
   },
-  // {
-  //   title: "Manage Member",
-  //   link: "/manage-member/member",
-  //   icon: <IconClipboard size={20} />,
-  //   gradient: "from-cyan-500 to-blue-600",
-  //   subMenu: [],
-  // },
-  // {
-  //   title: "Manage Prescription",
-  //   link: "/manage-prescription/prescription",
-  //   icon: <IconPrescription size={20} />,
-  //   gradient: "from-cyan-500 to-blue-600",
-  //   subMenu: [],
-  // },
 ];
 
 const Sidebar: React.FC<SidebarProps> = ({ handleCollapse, collapse }) => {
