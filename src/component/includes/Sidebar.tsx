@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { IconHome, IconBox, IconChevronRight, IconCalendarCheck, IconReportMedical, IconChevronLeft, IconHelpCircle, IconUsersGroup, IconClipboard, IconClover, IconReport, IconMedicalCross, IconPrescription } from "@tabler/icons-react";
+import { IconHome, IconBox, IconChevronRight, IconCalendarCheck, IconReportMedical, IconChevronLeft, IconHelpCircle, IconUsersGroup, IconClover, IconReport, IconMedicalCross } from "@tabler/icons-react";
 import { NavLink, useLocation } from "react-router";
 import { UnstyledButton, Tooltip, Box, Collapse, Group, Text, ActionIcon, ScrollArea, Avatar } from "@mantine/core";
 
@@ -130,11 +130,11 @@ const menuData: MenuItem[] = [
         link: "/manage-staff/staff-member",
         nestedMenu: [],
       },
-      {
-        title: "Pharmacist",
-        link: "/manage-staff/pharmacist",
-        nestedMenu: [],
-      },
+      // {
+      //   title: "Pharmacist",
+      //   link: "/manage-staff/pharmacist",
+      //   nestedMenu: [],
+      // },
     ],
   },
   {
@@ -148,16 +148,16 @@ const menuData: MenuItem[] = [
         link: "/manage-claim/facility-claim",
         nestedMenu: [],
       },
-      {
-        title: "Pharmacy claim",
-        link: "/manage-claim/pharmacy-claim",
-        nestedMenu: [],
-      },
-      {
-        title: "Settled claim",
-        link: "/manage-claim/settled-claim",
-        nestedMenu: [],
-      },
+      // {
+      //   title: "Pharmacy claim",
+      //   link: "/manage-claim/pharmacy-claim",
+      //   nestedMenu: [],
+      // },
+      // {
+      //   title: "Settled claim",
+      //   link: "/manage-claim/settled-claim",
+      //   nestedMenu: [],
+      // },
     ],
   },
   {
@@ -167,20 +167,20 @@ const menuData: MenuItem[] = [
     gradient: "from-cyan-500 to-blue-600",
     subMenu: [],
   },
-  {
-    title: "Manage Member",
-    link: "/manage-member/member",
-    icon: <IconClipboard size={20} />,
-    gradient: "from-cyan-500 to-blue-600",
-    subMenu: [],
-  },
-  {
-    title: "Manage Prescription",
-    link: "/manage-prescription/prescription",
-    icon: <IconPrescription size={20} />,
-    gradient: "from-cyan-500 to-blue-600",
-    subMenu: [],
-  },
+  // {
+  //   title: "Manage Member",
+  //   link: "/manage-member/member",
+  //   icon: <IconClipboard size={20} />,
+  //   gradient: "from-cyan-500 to-blue-600",
+  //   subMenu: [],
+  // },
+  // {
+  //   title: "Manage Prescription",
+  //   link: "/manage-prescription/prescription",
+  //   icon: <IconPrescription size={20} />,
+  //   gradient: "from-cyan-500 to-blue-600",
+  //   subMenu: [],
+  // },
 ];
 
 const Sidebar: React.FC<SidebarProps> = ({ handleCollapse, collapse }) => {
