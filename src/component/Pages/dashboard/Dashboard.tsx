@@ -1,326 +1,468 @@
-import { Card, Grid, Text, Group, Badge, ActionIcon, Progress, Avatar, Table, Button, SimpleGrid, ThemeIcon, RingProgress, Center, Paper, Stack } from "@mantine/core";
-import { IconUsers, IconCalendarEvent, IconBuildingHospital, IconUserPlus, IconArrowUpRight, IconArrowDownRight, IconEye, IconStethoscope, IconClock, IconActivity, IconHeart } from "@tabler/icons-react";
+import { Grid, Card, Text, Title, Group, Stack, Badge, SimpleGrid, Paper, ActionIcon, Avatar, Table, Container, ThemeIcon, Center, Timeline, Notification } from "@mantine/core";
+import { IconUsers, IconStethoscope, IconCalendarTime, IconActivity, IconUserCheck, IconClock, IconAlertTriangle, IconArrowRight, IconEye, IconEdit, IconBed, IconPill, IconReportMedical, IconAmbulance } from "@tabler/icons-react";
 
-const Dashboard = () => {
-  const statsData = [
+export const Dashboard = () => {
+  // Mock data for Private Practice dashboard
+  const medicalStats = [
     {
       title: "Total Patients",
       value: "2,847",
+      change: "+8.2%",
+      positive: true,
       icon: IconUsers,
       color: "blue",
-      change: "+12%",
-      changeType: "increase"
+      description: "Active patients",
     },
     {
-      title: "Appointments Today",
+      title: "Today's Appointments",
       value: "47",
-      icon: IconCalendarEvent,
+      change: "+12%",
+      positive: true,
+      icon: IconCalendarTime,
       color: "green",
-      change: "+8%",
-      changeType: "increase"
+      description: "Scheduled for today",
     },
     {
-      title: "Active Departments",
-      value: "12",
-      icon: IconBuildingHospital,
-      color: "violet",
-      change: "0%",
-      changeType: "neutral"
-    },
-    {
-      title: "New Registrations",
-      value: "156",
-      icon: IconUserPlus,
+      title: "Available Beds",
+      value: "23/45",
+      change: "-5 beds",
+      positive: false,
+      icon: IconBed,
       color: "orange",
-      change: "-3%",
-      changeType: "decrease"
-    }
+      description: "Current availability",
+    },
+    {
+      title: "Emergency Cases",
+      value: "8",
+      change: "+3",
+      positive: false,
+      icon: IconAmbulance,
+      color: "red",
+      description: "Active emergencies",
+    },
   ];
 
   const recentAppointments = [
     {
-      id: 1,
-      patientName: "Sarah Johnson",
-      doctor: "Dr. Emily Smith",
-      department: "Cardiology",
+      id: "APT001",
+      patient: "Sarah Johnson",
+      doctor: "Dr. Smith",
       time: "09:30 AM",
-      status: "confirmed",
-      avatar: "https://i.pravatar.cc/150?img=1"
+      type: "Cardiology",
+      status: "Confirmed",
+      avatar: "SJ",
     },
     {
-      id: 2,
-      patientName: "Michael Brown",
-      doctor: "Dr. James Wilson",
-      department: "Neurology",
+      id: "APT002",
+      patient: "Mike Davis",
+      doctor: "Dr. Wilson",
+      time: "10:15 AM",
+      type: "General",
+      status: "In Progress",
+      avatar: "MD",
+    },
+    {
+      id: "APT003",
+      patient: "Emma Brown",
+      doctor: "Dr. Johnson",
       time: "11:00 AM",
-      status: "pending",
-      avatar: "https://i.pravatar.cc/150?img=2"
+      type: "Pediatrics",
+      status: "Waiting",
+      avatar: "EB",
     },
     {
-      id: 3,
-      patientName: "Emma Davis",
-      doctor: "Dr. Maria Garcia",
-      department: "Pediatrics",
-      time: "02:15 PM",
-      status: "completed",
-      avatar: "https://i.pravatar.cc/150?img=3"
+      id: "APT004",
+      patient: "John Wilson",
+      doctor: "Dr. Lee",
+      time: "11:30 AM",
+      type: "Orthopedics",
+      status: "Completed",
+      avatar: "JW",
     },
-    {
-      id: 4,
-      patientName: "Robert Taylor",
-      doctor: "Dr. David Lee",
-      department: "Orthopedics",
-      time: "03:45 PM",
-      status: "confirmed",
-      avatar: "https://i.pravatar.cc/150?img=4"
-    }
   ];
 
-  const quickActions = [
+  const criticalAlerts = [
     {
-      title: "Schedule Appointment",
-      description: "Book new patient appointment",
-      icon: IconCalendarEvent,
-      color: "blue"
+      type: "critical",
+      message: "Patient in Room 204 requires immediate attention",
+      time: "2 min ago",
+      icon: IconAlertTriangle,
     },
     {
-      title: "Patient Registration",
-      description: "Add new patient to system",
-      icon: IconUserPlus,
-      color: "green"
+      type: "warning",
+      message: "Low inventory: Insulin supplies running low",
+      time: "15 min ago",
+      icon: IconPill,
     },
     {
-      title: "Medical Records",
-      description: "View patient medical history",
-      icon: IconStethoscope,
-      color: "violet"
+      type: "info",
+      message: "Dr. Anderson will be 30 minutes late",
+      time: "1 hour ago",
+      icon: IconClock,
     },
-    {
-      title: "Emergency Cases",
-      description: "Handle urgent medical cases",
-      icon: IconActivity,
-      color: "red"
-    }
   ];
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case "Confirmed":
+        return "green";
+      case "In Progress":
+        return "blue";
+      case "Waiting":
+        return "yellow";
+      case "Completed":
+        return "gray";
+      default:
+        return "gray";
+    }
+  };
+
+  const getAlertColor = (type: string) => {
+    switch (type) {
+      case "critical":
+        return "red";
+      case "warning":
+        return "yellow";
+      case "info":
+        return "blue";
+      default:
+        return "gray";
+    }
+  };
 
   return (
-    <div className="p-6 min-h-screen bg-gray-50 dark:bg-gray-900">
+    <Container fluid className="p-4 bg-gray-50 dark:bg-gray-900 min-h-screen">
+      <Stack gap="xl">
+        {/* Header */}
+        <div className="mb-6">
+          <Title order={1} className="text-gray-800 dark:text-white mb-2">
+            Private Practice Dashboard
+          </Title>
+          <Text c="dimmed" size="lg" className="dark:text-gray-300">
+            Real-time overview of your Private Practice operations and patient care.
+          </Text>
+        </div>
 
-      <div className="mb-8">
-        <Text size="xl" fw={700} className="text-gray-800 dark:text-gray-200 mb-2">
-          Private Practice Portal Dashboard
-        </Text>
-        <Text size="sm" c="dimmed">
-          Welcome back! Here's what's happening at your private practice portal today.
-        </Text>
-      </div>
+        {/* Statistics Cards */}
+        <SimpleGrid cols={{ base: 1, sm: 2, lg: 4 }} spacing="lg">
+          {medicalStats.map((stat) => (
+            <Card
+              key={stat.title}
+              shadow="sm"
+              padding="lg"
+              radius="md"
+              className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 transition-all duration-200 hover:shadow-lg hover:scale-105"
+            >
+              <Group justify="space-between" mb="xs">
+                <ThemeIcon
+                  size="xl"
+                  radius="md"
+                  variant="light"
+                  color={stat.color}
+                  className="dark:bg-opacity-20"
+                >
+                  <stat.icon size={24} />
+                </ThemeIcon>
+                <Badge
+                  color={stat.positive ? "green" : "red"}
+                  variant="light"
+                  size="sm"
+                  className="dark:bg-opacity-20"
+                >
+                  {stat.change}
+                </Badge>
+              </Group>
+              <Text size="xl" fw={700} className="text-gray-800 dark:text-white">
+                {stat.value}
+              </Text>
+              <Text size="sm" c="dimmed" className="dark:text-gray-400">
+                {stat.title}
+              </Text>
+              <Text size="xs" c="dimmed" mt={4} className="dark:text-gray-500">
+                {stat.description}
+              </Text>
+            </Card>
+          ))}
+        </SimpleGrid>
 
-      <SimpleGrid cols={{ base: 1, sm: 2, lg: 4 }} spacing="md" className="mb-8">
-        {statsData.map((stat, index) => (
-          <Card key={index} withBorder shadow="sm" className="hover:shadow-md transition-shadow">
-            <Group justify="apart">
-              <div>
-                <Text c="dimmed" size="xs" fw={700} className="uppercase tracking-wide">
-                  {stat.title}
-                </Text>
-                <Text fw={700} size="xl" className="mt-1">
-                  {stat.value}
-                </Text>
-                <Group gap="xs" className="mt-2">
-                  <Text
-                    size="xs"
-                    c={stat.changeType === 'increase' ? 'teal' : stat.changeType === 'decrease' ? 'red' : 'gray'}
-                    className="flex items-center gap-1"
-                  >
-                    {stat.changeType === 'increase' && <IconArrowUpRight size={14} />}
-                    {stat.changeType === 'decrease' && <IconArrowDownRight size={14} />}
-                    {stat.change}
-                  </Text>
-                  <Text size="xs" c="dimmed">vs last month</Text>
-                </Group>
-              </div>
-              <ThemeIcon color={stat.color} size="xl" radius="md" variant="light">
-                <stat.icon size={24} />
-              </ThemeIcon>
-            </Group>
-          </Card>
-        ))}
-      </SimpleGrid>
+        {/* Main Content Grid */}
+        <Grid gutter="lg">
+          {/* Today's Appointments */}
+          <Grid.Col span={{ base: 12, lg: 8 }}>
+            <Card
+              shadow="sm"
+              padding="lg"
+              radius="md"
+              className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700"
+            >
+              <Group justify="space-between" mb="md">
+                <Title order={3} className="text-gray-800 dark:text-white">
+                  Today's Appointments
+                </Title>
+                <ActionIcon
+                  variant="light"
+                  color="blue"
+                  className="hover:bg-blue-50 dark:hover:bg-blue-900"
+                >
+                  <IconArrowRight size={16} />
+                </ActionIcon>
+              </Group>
 
-      <Grid gutter="md">
-        {/* Recent Appointments */}
-        <Grid.Col span={{ base: 12, lg: 8 }}>
-          <Card withBorder shadow="sm" className="h-full">
-            <Group justify="apart" className="mb-4">
-              <Text fw={600} size="lg">Today's Appointments</Text>
-              <Button variant="light" size="xs">View All</Button>
-            </Group>
-
-            <Table className="w-full">
-              <Table.Thead>
-                <Table.Tr>
-                  <Table.Th>Patient</Table.Th>
-                  <Table.Th>Doctor</Table.Th>
-                  <Table.Th>Department</Table.Th>
-                  <Table.Th>Time</Table.Th>
-                  <Table.Th>Status</Table.Th>
-                  <Table.Th></Table.Th>
-                </Table.Tr>
-              </Table.Thead>
-              <Table.Tbody>
-                {recentAppointments.map((appointment) => (
-                  <Table.Tr key={appointment.id} className="hover:bg-gray-50 dark:hover:bg-gray-800">
-                    <Table.Td>
-                      <Group gap="sm">
-                        <Avatar src={appointment.avatar} size="sm" radius="xl" />
-                        <Text size="sm" fw={500}>{appointment.patientName}</Text>
-                      </Group>
-                    </Table.Td>
-                    <Table.Td>
-                      <Text size="sm">{appointment.doctor}</Text>
-                    </Table.Td>
-                    <Table.Td>
-                      <Badge variant="light" size="sm">{appointment.department}</Badge>
-                    </Table.Td>
-                    <Table.Td>
-                      <Group gap="xs">
-                        <IconClock size={14} />
-                        <Text size="sm">{appointment.time}</Text>
-                      </Group>
-                    </Table.Td>
-                    <Table.Td>
-                      <Badge
-                        color={
-                          appointment.status === 'confirmed' ? 'green' :
-                            appointment.status === 'pending' ? 'orange' : 'blue'
-                        }
-                        variant="light"
-                        size="sm"
-                      >
-                        {appointment.status}
-                      </Badge>
-                    </Table.Td>
-                    <Table.Td>
-                      <ActionIcon variant="light" size="sm">
-                        <IconEye size={16} />
-                      </ActionIcon>
-                    </Table.Td>
+              <Table striped highlightOnHover className="dark:text-gray-300">
+                <Table.Thead>
+                  <Table.Tr className="dark:border-gray-600">
+                    <Table.Th className="dark:text-gray-300">Patient</Table.Th>
+                    <Table.Th className="dark:text-gray-300">Doctor</Table.Th>
+                    <Table.Th className="dark:text-gray-300">Time</Table.Th>
+                    <Table.Th className="dark:text-gray-300">Department</Table.Th>
+                    <Table.Th className="dark:text-gray-300">Status</Table.Th>
+                    <Table.Th className="dark:text-gray-300">Actions</Table.Th>
                   </Table.Tr>
-                ))}
-              </Table.Tbody>
-            </Table>
-          </Card>
-        </Grid.Col>
+                </Table.Thead>
+                <Table.Tbody>
+                  {recentAppointments.map((appointment) => (
+                    <Table.Tr key={appointment.id} className="dark:border-gray-700">
+                      <Table.Td>
+                        <Group gap="sm">
+                          <Avatar color="blue" radius="xl" size="sm">
+                            {appointment.avatar}
+                          </Avatar>
+                          <Text className="dark:text-gray-300">{appointment.patient}</Text>
+                        </Group>
+                      </Table.Td>
+                      <Table.Td className="dark:text-gray-300">{appointment.doctor}</Table.Td>
+                      <Table.Td className="dark:text-gray-300 font-medium">
+                        {appointment.time}
+                      </Table.Td>
+                      <Table.Td className="dark:text-gray-300">{appointment.type}</Table.Td>
+                      <Table.Td>
+                        <Badge
+                          color={getStatusColor(appointment.status)}
+                          variant="light"
+                          size="sm"
+                          className="dark:bg-opacity-20"
+                        >
+                          {appointment.status}
+                        </Badge>
+                      </Table.Td>
+                      <Table.Td>
+                        <Group gap="xs">
+                          <ActionIcon
+                            variant="subtle"
+                            color="blue"
+                            size="sm"
+                            className="hover:bg-blue-50 dark:hover:bg-blue-900"
+                          >
+                            <IconEye size={14} />
+                          </ActionIcon>
+                          <ActionIcon
+                            variant="subtle"
+                            color="green"
+                            size="sm"
+                            className="hover:bg-green-50 dark:hover:bg-green-900"
+                          >
+                            <IconEdit size={14} />
+                          </ActionIcon>
+                        </Group>
+                      </Table.Td>
+                    </Table.Tr>
+                  ))}
+                </Table.Tbody>
+              </Table>
+            </Card>
+          </Grid.Col>
 
-        {/* Quick Actions & Overview */}
-        <Grid.Col span={{ base: 12, lg: 4 }}>
-          <Stack gap="md">
-            {/* Quick Actions */}
-            <Card withBorder shadow="sm">
-              <Text fw={600} size="lg" className="mb-4">Quick Actions</Text>
-              <Stack gap="sm">
-                {quickActions.map((action, index) => (
-                  <Paper key={index} p="md" className="hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer transition-colors border border-gray-200 dark:border-gray-700">
-                    <Group>
-                      <ThemeIcon color={action.color} size="lg" radius="md" variant="light">
-                        <action.icon size={20} />
+          {/* Sidebar Content */}
+          <Grid.Col span={{ base: 12, lg: 4 }}>
+            <Stack gap="lg">
+              {/* Critical Alerts */}
+              <Card
+                shadow="sm"
+                padding="lg"
+                radius="md"
+                className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700"
+              >
+                <Group justify="space-between" mb="md">
+                  <Title order={4} className="text-gray-800 dark:text-white">
+                    Critical Alerts
+                  </Title>
+                  <ThemeIcon color="red" variant="light" size="sm">
+                    <IconAlertTriangle size={16} />
+                  </ThemeIcon>
+                </Group>
+
+                <Stack gap="sm">
+                  {criticalAlerts.map((alert, index) => (
+                    <Notification
+                      key={index}
+                      icon={<alert.icon size={16} />}
+                      color={getAlertColor(alert.type)}
+                      title={alert.message}
+                      onClose={() => { }}
+                      className="dark:bg-gray-700 dark:border-gray-600"
+                    >
+                      <Text size="xs" c="dimmed" className="dark:text-gray-400">
+                        {alert.time}
+                      </Text>
+                    </Notification>
+                  ))}
+                </Stack>
+              </Card>
+
+            </Stack>
+          </Grid.Col>
+        </Grid>
+
+        {/* Additional Medical Metrics */}
+        <Grid gutter="lg">
+          <Grid.Col span={{ base: 12, md: 6 }}>
+            <Card
+              shadow="sm"
+              padding="lg"
+              radius="md"
+              className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700"
+            >
+              <Group justify="space-between" mb="md">
+                <Title order={4} className="text-gray-800 dark:text-white">
+                  Recent Activity
+                </Title>
+                <ThemeIcon color="blue" variant="light" size="sm">
+                  <IconActivity size={16} />
+                </ThemeIcon>
+              </Group>
+
+              <Timeline bulletSize={20} lineWidth={2}>
+                <Timeline.Item
+                  bullet={<IconUserCheck size={12} />}
+                  title="Patient admitted to Room 305"
+                  color="green"
+                >
+                  <Text c="dimmed" size="sm" className="dark:text-gray-400">
+                    John Doe checked in for cardiac monitoring
+                  </Text>
+                  <Text size="xs" mt={4} className="dark:text-gray-500">
+                    15 minutes ago
+                  </Text>
+                </Timeline.Item>
+
+                <Timeline.Item
+                  bullet={<IconPill size={12} />}
+                  title="Medication administered"
+                  color="blue"
+                >
+                  <Text c="dimmed" size="sm" className="dark:text-gray-400">
+                    Pain medication given to patient in Room 201
+                  </Text>
+                  <Text size="xs" mt={4} className="dark:text-gray-500">
+                    30 minutes ago
+                  </Text>
+                </Timeline.Item>
+
+                <Timeline.Item
+                  bullet={<IconReportMedical size={12} />}
+                  title="Lab results ready"
+                  color="yellow"
+                >
+                  <Text c="dimmed" size="sm" className="dark:text-gray-400">
+                    Blood work completed for Sarah Johnson
+                  </Text>
+                  <Text size="xs" mt={4} className="dark:text-gray-500">
+                    1 hour ago
+                  </Text>
+                </Timeline.Item>
+              </Timeline>
+            </Card>
+          </Grid.Col>
+
+          <Grid.Col span={{ base: 12, md: 6 }}>
+            <Card
+              shadow="sm"
+              padding="lg"
+              radius="md"
+              className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700"
+            >
+              <Group justify="space-between" mb="md">
+                <Title order={4} className="text-gray-800 dark:text-white">
+                  Quick Actions
+                </Title>
+                <ThemeIcon color="purple" variant="light" size="sm">
+                  <IconStethoscope size={16} />
+                </ThemeIcon>
+              </Group>
+
+              <SimpleGrid cols={2} spacing="md">
+                <Paper
+                  p="md"
+                  radius="md"
+                  className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 cursor-pointer hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors"
+                >
+                  <Center>
+                    <Stack align="center" gap="xs">
+                      <ThemeIcon color="blue" variant="light" size="lg">
+                        <IconUsers size={20} />
                       </ThemeIcon>
-                      <div className="flex-1">
-                        <Text size="sm" fw={500}>{action.title}</Text>
-                        <Text size="xs" c="dimmed">{action.description}</Text>
-                      </div>
-                    </Group>
-                  </Paper>
-                ))}
-              </Stack>
+                      <Text size="sm" fw={500} className="text-blue-700 dark:text-blue-300">
+                        Add Patient
+                      </Text>
+                    </Stack>
+                  </Center>
+                </Paper>
+
+                <Paper
+                  p="md"
+                  radius="md"
+                  className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 cursor-pointer hover:bg-green-100 dark:hover:bg-green-900/30 transition-colors"
+                >
+                  <Center>
+                    <Stack align="center" gap="xs">
+                      <ThemeIcon color="green" variant="light" size="lg">
+                        <IconCalendarTime size={20} />
+                      </ThemeIcon>
+                      <Text size="sm" fw={500} className="text-green-700 dark:text-green-300">
+                        Schedule
+                      </Text>
+                    </Stack>
+                  </Center>
+                </Paper>
+
+                <Paper
+                  p="md"
+                  radius="md"
+                  className="bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 cursor-pointer hover:bg-orange-100 dark:hover:bg-orange-900/30 transition-colors"
+                >
+                  <Center>
+                    <Stack align="center" gap="xs">
+                      <ThemeIcon color="orange" variant="light" size="lg">
+                        <IconReportMedical size={20} />
+                      </ThemeIcon>
+                      <Text size="sm" fw={500} className="text-orange-700 dark:text-orange-300">
+                        Lab Results
+                      </Text>
+                    </Stack>
+                  </Center>
+                </Paper>
+
+                <Paper
+                  p="md"
+                  radius="md"
+                  className="bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 cursor-pointer hover:bg-purple-100 dark:hover:bg-purple-900/30 transition-colors"
+                >
+                  <Center>
+                    <Stack align="center" gap="xs">
+                      <ThemeIcon color="purple" variant="light" size="lg">
+                        <IconAmbulance size={20} />
+                      </ThemeIcon>
+                      <Text size="sm" fw={500} className="text-purple-700 dark:text-purple-300">
+                        Emergency
+                      </Text>
+                    </Stack>
+                  </Center>
+                </Paper>
+              </SimpleGrid>
             </Card>
-
-            {/* Patient Overview */}
-            <Card withBorder shadow="sm">
-              <Text fw={600} size="lg" className="mb-4">Patient Overview</Text>
-              <Stack gap="md">
-                <div>
-                  <Group justify="apart" className="mb-2">
-                    <Text size="sm">Occupancy Rate</Text>
-                    <Text size="sm" fw={500}>78%</Text>
-                  </Group>
-                  <Progress value={78} color="blue" size="sm" />
-                </div>
-
-                <div>
-                  <Group justify="apart" className="mb-2">
-                    <Text size="sm">Emergency Cases</Text>
-                    <Text size="sm" fw={500}>12</Text>
-                  </Group>
-                  <Progress value={24} color="red" size="sm" />
-                </div>
-
-                <div>
-                  <Group justify="apart" className="mb-2">
-                    <Text size="sm">Critical Patients</Text>
-                    <Text size="sm" fw={500}>8</Text>
-                  </Group>
-                  <Progress value={16} color="orange" size="sm" />
-                </div>
-              </Stack>
-            </Card>
-
-            {/* Department Status */}
-            <Card withBorder shadow="sm">
-              <Text fw={600} size="lg" className="mb-4">Department Status</Text>
-              <Center>
-                <RingProgress
-                  size={120}
-                  thickness={8}
-                  sections={[
-                    { value: 40, color: 'blue', tooltip: 'Cardiology - 40%' },
-                    { value: 25, color: 'cyan', tooltip: 'Neurology - 25%' },
-                    { value: 15, color: 'orange', tooltip: 'Pediatrics - 15%' },
-                    { value: 20, color: 'green', tooltip: 'Orthopedics - 20%' },
-                  ]}
-                  label={
-                    <Center>
-                      <IconHeart size={24} />
-                    </Center>
-                  }
-                />
-              </Center>
-              <Stack gap="xs" className="mt-4">
-                <Group justify="apart">
-                  <Group gap="xs">
-                    <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-                    <Text size="xs">Cardiology</Text>
-                  </Group>
-                  <Text size="xs" fw={500}>40%</Text>
-                </Group>
-                <Group justify="apart">
-                  <Group gap="xs">
-                    <div className="w-3 h-3 bg-cyan-500 rounded-full"></div>
-                    <Text size="xs">Neurology</Text>
-                  </Group>
-                  <Text size="xs" fw={500}>25%</Text>
-                </Group>
-                <Group justify="apart">
-                  <Group gap="xs">
-                    <div className="w-3 h-3 bg-orange-500 rounded-full"></div>
-                    <Text size="xs">Pediatrics</Text>
-                  </Group>
-                  <Text size="xs" fw={500}>15%</Text>
-                </Group>
-                <Group justify="apart">
-                  <Group gap="xs">
-                    <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                    <Text size="xs">Orthopedics</Text>
-                  </Group>
-                  <Text size="xs" fw={500}>20%</Text>
-                </Group>
-              </Stack>
-            </Card>
-          </Stack>
-        </Grid.Col>
-      </Grid>
-    </div>
+          </Grid.Col>
+        </Grid>
+      </Stack>
+    </Container>
   );
 };
-
-export default Dashboard;
