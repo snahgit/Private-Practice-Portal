@@ -265,6 +265,11 @@ export const Patient = () => {
         val.name.toLowerCase().includes(filterState.filter.textFilter.toLowerCase()) || ''
       );
     }
+    if (filterState.filter.dateFilter && filterState.filter.dateFilter !== 'all') {
+      if (filterState.filter.dateFilter.match(/^\d{4}-\d{2}-\d{2}$/)) {
+        filtered = filtered.filter(val => val.lastVisit === filterState.filter.dateFilter);
+      }
+    }
     if (filterState.filter.patientTypeFilter && filterState.filter.patientTypeFilter !== 'all') {
       filtered = filtered.filter(val =>
         val.type.toLowerCase() === filterState.filter.patientTypeFilter.toLowerCase()
