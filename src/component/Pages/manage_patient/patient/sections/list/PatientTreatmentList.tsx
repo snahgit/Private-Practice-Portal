@@ -104,7 +104,7 @@ export const PatientTreatmentList = () => {
             }
             setTimeout(() => drawerApiRef.current?.open?.(), 0);
         };
-        requireSecurityCheck(originalAddAction, "Add");
+        requireSecurityCheck(originalAddAction, "treatment");
     };
 
     const getStatusBadgeColor = (status: string) => {
