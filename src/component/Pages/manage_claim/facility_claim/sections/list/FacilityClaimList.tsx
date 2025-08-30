@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useMemo, useRef, useState } from "react";
-import { ActionIcon, Badge, Card, Group, Table, Text, Tooltip, Box, Menu, Alert } from "@mantine/core";
+import { ActionIcon, Badge, Card, Group, Table, Text, Tooltip, Box, Menu, Alert, NumberFormatter } from "@mantine/core";
 import { IconAlertCircle, IconDetails, IconDots, IconMailPin, IconReceipt, IconSend2 } from "@tabler/icons-react";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../../../../../redux/store";
@@ -14,9 +14,6 @@ import moment from "moment";
 import { FacilityClaimQuickView } from "../detail/FacilityClaimQuickView";
 import { FacilityClaimSendForm } from "../form/FacilityClaimSendForm";
 import { useSecurityCheck } from "../../../../../../context/SecurityCheckContext";
-
-
-const inr = new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR", maximumFractionDigits: 2 });
 
 export const FacilityClaimList = (props: { dataPass: any }) => {
   const { claimRows } = props.dataPass;
@@ -242,7 +239,7 @@ export const FacilityClaimList = (props: { dataPass: any }) => {
                             Total fee
                           </Text>
                           <Text size="sm" fw={700}>
-                            {inr.format(row.totalFee)}
+                            <NumberFormatter value={row.totalFee} prefix="$ " />
                           </Text>
                         </div>
                         {row.status == "Rejected" && (
@@ -354,7 +351,7 @@ export const FacilityClaimList = (props: { dataPass: any }) => {
 
                           <Table.Td className="p-4 text-center">
                             <Text size="sm" fw={700}>
-                              {inr.format(row.totalFee)}
+                              <NumberFormatter value={row.totalFee} prefix="$ " />
                             </Text>
                           </Table.Td>
 

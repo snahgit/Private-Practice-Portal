@@ -47,7 +47,6 @@ import { ReportAddEditForm } from "./Pages/manage_report/report/sections/form/Re
 import { Profile } from "./Pages/profile/Profile";
 import { ReportDetail } from "./Pages/manage_report/report/sections/detail/ReportDetail";
 import { StaffMemberDetail } from "./Pages/manage_staff/staff_member/sections/detail/StaffMemberDetail";
-import { WalletTransaction } from "./Pages/transaction_history/wallet_transaction/WalletTransaction";
 import { PatientDetail } from "./Pages/manage_patient/patient/sections/detail/PatientDetail";
 import { PhysicianDetail } from "./Pages/medical_provider/physician/sections/detail/PhysicianDetail";
 import { ManagePatient } from "./Pages/manage_patient/ManagePatient";
@@ -58,6 +57,7 @@ import { PageAudioVideoCall } from "./common/PageAudioVideoCall";
 import { ViewAccessLog } from "./Pages/quick_assist/view_access_log/ViewAccessLog";
 import { Physician } from "./Pages/medical_provider/physician/Physician";
 import { Dashboard } from "./Pages/dashboard/Dashboard";
+import { Revenue } from "./Pages/transaction_history/revenue/Revenue";
 
 const App = () => {
   const queryClient = new QueryClient();
@@ -356,12 +356,21 @@ const App = () => {
                 };
               },
             },
+            // {
+            //   path: "wallet-transaction",
+            //   element: <WalletTransaction />,
+            //   loader: () => {
+            //     return {
+            //       type: 'walletTransaction',
+            //     };
+            //   },
+            // },
             {
-              path: "wallet-transaction",
-              element: <WalletTransaction />,
+              path: "revenue",
+              element: <Revenue />,
               loader: () => {
                 return {
-                  type: 'walletTransaction',
+                  type: 'revenue',
                 };
               },
             },
