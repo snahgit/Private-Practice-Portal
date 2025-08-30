@@ -110,6 +110,19 @@ export const PatientsList = (props: { dataPass: any }) => {
     requireSecurityCheck(originalAddAction, type);
   };
 
+  const handleStatusColor = (type: string) => {
+    switch (type) {
+      case "Medicate":
+        return "cyan";
+      case "Medicare":
+        return "blue";
+      case "Private Insurance":
+        return "pink";
+      default:
+        return "gray";
+    }
+  };
+
   return (
     <Card.Section className="p-4">
       <PageDrawer
@@ -198,10 +211,10 @@ export const PatientsList = (props: { dataPass: any }) => {
                                 <Badge
                                   variant="light"
                                   className="cursor-pointer"
-                                  color={val.status == "Active" ? "green" : "red"}
+                                  color={handleStatusColor(val.type)}
                                   radius="sm"
                                 >
-                                  {val.status}
+                                  {val.type}
                                 </Badge>
                               </div>
                             </Card.Section>

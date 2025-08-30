@@ -41,5 +41,12 @@ export const CONSTANT = {
         paid: 'Paid',
         returned: 'Returned',
         completed: 'Completed'
+    },
+    patient: {
+        type: {
+            medicate: 'Medicate',
+            medicare: 'Medicare',
+            privateInsurance: 'Private Insurance'
+        }
     }
 };

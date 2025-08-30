@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { Box, Button, Card, Grid, Select, Text, TextInput, Badge } from "@mantine/core";
 import { useEffect, useRef, useState } from "react";
 import { IconPlus } from "@tabler/icons-react";
@@ -339,8 +339,7 @@ export const ScheduleAddEditForm = () => {
             </Grid>
           </Box>
           {allslots.length != 0 && (
-            <>
-              {" "}
+            <Fragment>
               <Text fw={500} className="text-xl mt-4">
                 Generated Slots
               </Text>
@@ -385,7 +384,7 @@ export const ScheduleAddEditForm = () => {
                   </Button>
                 </Grid.Col>
               </Grid>
-            </>
+            </Fragment>
           )}
         </Card>
       </Box>

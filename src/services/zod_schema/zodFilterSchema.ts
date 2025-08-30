@@ -18,6 +18,7 @@ export function filterSchema() {
         propertyFilter: z.string().optional(),
         stateFilter: z.string().optional(),
         dateFilter: z.string().optional(),
+        patientTypeFilter: z.string().optional(),
         claimFilter: z.string().optional(),
     });
 }
@@ -31,5 +32,6 @@ export type FilterFormType = {
     propertyFilter?: string;
     stateFilter?: string;
     claimFilter?: string;
+    patientTypeFilter?: string;
     dateFilter?: string | null;
 } & z.infer<typeof filterSchema>;

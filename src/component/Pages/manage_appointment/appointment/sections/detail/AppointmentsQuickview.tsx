@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { Badge, Grid, Group, Paper, Stack, Table, Text } from "@mantine/core";
 import { IconBrandBooking, IconPrescription } from "@tabler/icons-react";
 import { useRef } from "react";
@@ -14,7 +14,7 @@ const AppointmentsQuickView = (__props: { dataPass: any }) => {
     }
   };
   return (
-    <>
+    <Fragment>
       <div className="bg-gray-50 dark:bg-gray-900 min-h-screen">
         <Stack gap="xl" className="pb-6">
           <Grid>
@@ -420,7 +420,7 @@ const AppointmentsQuickView = (__props: { dataPass: any }) => {
           // ),
         }}
       />
-    </>
+    </Fragment>
   );
 };
 

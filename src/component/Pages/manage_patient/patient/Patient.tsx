@@ -22,9 +22,9 @@ export const Patient = () => {
     whatNeeded: {
       isViewModeNeeded: true,
       isFilterNeeded: true,
+      isSpecificFilterNeeded: true
     }
   };
-
   const allPatient = [
     {
       "id": 1,
@@ -34,6 +34,7 @@ export const Patient = () => {
       "avatar": "https://i.pravatar.cc/150?img=29",
       "lastVisit": "2025-06-09",
       "status": "Active",
+      "type": "Medicate",
       "gender": "female"
     },
     {
@@ -44,6 +45,7 @@ export const Patient = () => {
       "avatar": "https://i.pravatar.cc/150?img=64",
       "lastVisit": "2025-05-01",
       "status": "Inactive",
+      "type": "Medicare",
       "gender": "female"
     },
     {
@@ -54,6 +56,7 @@ export const Patient = () => {
       "avatar": "https://i.pravatar.cc/150?img=39",
       "lastVisit": "2025-04-22",
       "status": "Active",
+      "type": "Private Insurance",
       "gender": "female"
     },
     {
@@ -64,6 +67,7 @@ export const Patient = () => {
       "avatar": "https://i.pravatar.cc/150?img=51",
       "lastVisit": "2025-02-24",
       "status": "Inactive",
+      "type": "Medicate",
       "gender": "female"
     },
     {
@@ -74,6 +78,7 @@ export const Patient = () => {
       "avatar": "https://i.pravatar.cc/150?img=1",
       "lastVisit": "2025-05-14",
       "status": "Active",
+      "type": "Medicare",
       "gender": "female"
     },
     {
@@ -84,6 +89,7 @@ export const Patient = () => {
       "avatar": "https://i.pravatar.cc/150?img=18",
       "lastVisit": "2025-04-02",
       "status": "Inactive",
+      "type": "Private Insurance",
       "gender": "male"
     },
     {
@@ -94,6 +100,7 @@ export const Patient = () => {
       "avatar": "https://i.pravatar.cc/150?img=10",
       "lastVisit": "2025-04-12",
       "status": "Active",
+      "type": "Medicate",
       "gender": "female"
     },
     {
@@ -104,6 +111,7 @@ export const Patient = () => {
       "avatar": "https://i.pravatar.cc/150?img=57",
       "lastVisit": "2025-06-24",
       "status": "Inactive",
+      "type": "Medicare",
       "gender": "female"
     },
     {
@@ -114,6 +122,7 @@ export const Patient = () => {
       "avatar": "https://i.pravatar.cc/150?img=58",
       "lastVisit": "2025-04-18",
       "status": "Active",
+      "type": "Private Insurance",
       "gender": "male"
     },
     {
@@ -124,6 +133,7 @@ export const Patient = () => {
       "avatar": "https://i.pravatar.cc/150?img=22",
       "lastVisit": "2025-05-28",
       "status": "Inactive",
+      "type": "Medicate",
       "gender": "male"
     },
     {
@@ -134,6 +144,7 @@ export const Patient = () => {
       "avatar": "https://i.pravatar.cc/150?img=34",
       "lastVisit": "2025-03-06",
       "status": "Active",
+      "type": "Medicare",
       "gender": "female"
     },
     {
@@ -144,6 +155,7 @@ export const Patient = () => {
       "avatar": "https://i.pravatar.cc/150?img=53",
       "lastVisit": "2025-03-10",
       "status": "Inactive",
+      "type": "Private Insurance",
       "gender": "male"
     },
     {
@@ -154,6 +166,7 @@ export const Patient = () => {
       "avatar": "https://i.pravatar.cc/150?img=28",
       "lastVisit": "2025-07-17",
       "status": "Active",
+      "type": "Medicate",
       "gender": "female"
     },
     {
@@ -164,6 +177,7 @@ export const Patient = () => {
       "avatar": "https://i.pravatar.cc/150?img=66",
       "lastVisit": "2025-04-06",
       "status": "Inactive",
+      "type": "Medicare",
       "gender": "male"
     },
     {
@@ -174,6 +188,7 @@ export const Patient = () => {
       "avatar": "https://i.pravatar.cc/150?img=35",
       "lastVisit": "2025-07-22",
       "status": "Active",
+      "type": "Private Insurance",
       "gender": "female"
     },
     {
@@ -184,6 +199,7 @@ export const Patient = () => {
       "avatar": "https://i.pravatar.cc/150?img=31",
       "lastVisit": "2025-03-01",
       "status": "Inactive",
+      "type": "Medicate",
       "gender": "male"
     },
     {
@@ -194,6 +210,7 @@ export const Patient = () => {
       "avatar": "https://i.pravatar.cc/150?img=67",
       "lastVisit": "2025-07-07",
       "status": "Active",
+      "type": "Medicare",
       "gender": "female"
     },
     {
@@ -204,6 +221,7 @@ export const Patient = () => {
       "avatar": "https://i.pravatar.cc/150?img=54",
       "lastVisit": "2025-05-03",
       "status": "Inactive",
+      "type": "Private Insurance",
       "gender": "male"
     },
     {
@@ -214,6 +232,7 @@ export const Patient = () => {
       "avatar": "https://i.pravatar.cc/150?img=1",
       "lastVisit": "2025-03-02",
       "status": "Active",
+      "type": "Medicate",
       "gender": "female"
     },
     {
@@ -224,6 +243,7 @@ export const Patient = () => {
       "avatar": "https://i.pravatar.cc/150?img=64",
       "lastVisit": "2025-05-13",
       "status": "Inactive",
+      "type": "Medicare",
       "gender": "female"
     },
     {
@@ -234,6 +254,7 @@ export const Patient = () => {
       "avatar": "https://i.pravatar.cc/150?img=8",
       "lastVisit": "2025-05-19",
       "status": "Active",
+      "type": "Private Insurance",
       "gender": "male"
     },
   ]
@@ -244,9 +265,9 @@ export const Patient = () => {
         val.name.toLowerCase().includes(filterState.filter.textFilter.toLowerCase()) || ''
       );
     }
-    if (filterState.filter.statusFilter && filterState.filter.statusFilter !== 'all') {
+    if (filterState.filter.patientTypeFilter && filterState.filter.patientTypeFilter !== 'all') {
       filtered = filtered.filter(val =>
-        val.status.toLowerCase() === filterState.filter.statusFilter.toLowerCase()
+        val.type.toLowerCase() === filterState.filter.patientTypeFilter.toLowerCase()
       );
     }
     if (filterState.filter.genderFilter && filterState.filter.genderFilter !== 'all') {

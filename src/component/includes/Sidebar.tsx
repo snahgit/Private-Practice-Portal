@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import { IconHome, IconBox, IconChevronRight, IconCalendarCheck, IconReportMedical, IconChevronLeft, IconHelpCircle, IconUsersGroup, IconClover, IconReport, IconMedicalCross } from "@tabler/icons-react";
 import { NavLink, useLocation } from "react-router";
 import { UnstyledButton, Tooltip, Box, Collapse, Group, Text, ActionIcon, ScrollArea, Avatar } from "@mantine/core";
@@ -435,7 +435,7 @@ const Sidebar: React.FC<SidebarProps> = ({ handleCollapse, collapse }) => {
                   {() => {
                     const isActive = location.pathname === subItem.link || location.pathname.startsWith(subItem.link + "/");
                     return (
-                      <>
+                      <Fragment>
                         <div
                           className={`w-2 h-2 rounded-full mr-3 transition-all duration-300 ${isActive
                             ? "bg-cyan-600 dark:bg-cyan-400 shadow-md"
@@ -443,7 +443,7 @@ const Sidebar: React.FC<SidebarProps> = ({ handleCollapse, collapse }) => {
                             }`}
                         />
                         <span className="truncate">{subItem.title}</span>
-                      </>
+                      </Fragment>
                     );
                   }}
                 </NavLink>
